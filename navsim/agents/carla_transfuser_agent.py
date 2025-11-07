@@ -1,4 +1,5 @@
 import json
+import logging
 import os
 from tabnanny import check
 from typing import List, Dict, Union
@@ -21,6 +22,8 @@ from open_loop_inference import OpenLoopInference as CarlaOpenLoopInference
 from open_loop_inference import OpenLoopPrediction as CarlaOpenLoopPrediction
 from constants import SourceDataset as CarlaSourceDataset
 import numpy as np
+
+logger =logging.getLogger(__name__)
 
 class CarlaTransfuserAgent(AbstractAgent):
     """Agent interface for TransFuser baseline."""
@@ -82,6 +85,8 @@ class CarlaTransfuserAgent(AbstractAgent):
         rgb = cv2.imdecode(np.frombuffer(rgb, np.uint8), cv2.IMREAD_COLOR)
         rgb = np.transpose(rgb, (2, 0, 1))  # HWC to CHW
         rgb = torch.tensor(rgb).unsqueeze(0).float()  # CHW to NCHW
+        
+        logger.info(f"RGB shape: {rgb.shape}. Features shape: {features['status_feature'].shape}")
         output: CarlaOpenLoopPrediction = self._carla_open_loop_inference.forward({
             "rgb": rgb,
             "command": features["status_feature"][:4].reshape(-1, 4),
