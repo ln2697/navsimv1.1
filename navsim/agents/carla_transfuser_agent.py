@@ -16,6 +16,7 @@ from navsim.common.dataclasses import SensorConfig
 from navsim.planning.training.abstract_feature_target_builder import AbstractFeatureBuilder, AbstractTargetBuilder
 
 from open_loop_inference import OpenLoopInference as CarlaOpenLoopInference
+from constants import SourceDataset as CarlaSourceDataset
 
 class CarlaTransfuserAgent(AbstractAgent):
     """Agent interface for TransFuser baseline."""
@@ -70,7 +71,14 @@ class CarlaTransfuserAgent(AbstractAgent):
 
     def forward(self, features: Dict[str, torch.Tensor]) -> Dict[str, torch.Tensor]:
         """Inherited, see superclass."""
-        return self._carla_open_loop_inference(features)
+        
+        return self._carla_open_loop_inference({
+            "rgb": features["rgb"],
+            "source_dataset": CarlaSourceDataset.NAVSIM,
+            "command": features["status_feature"][:4],
+            "speed": torch.norm(features["status_feature"][4:6]),
+            "acceleration": torch.norm(features["status_feature"][6:8]),
+        })
 
     def compute_loss(
         self,
