@@ -85,8 +85,8 @@ class CarlaTransfuserAgent(AbstractAgent):
         output: CarlaOpenLoopPrediction = self._carla_open_loop_inference.forward({
             "rgb": rgb,
             "command": features["status_feature"][:4].reshape(-1, 4),
-            "speed": torch.linalg.norm(features["status_feature"][4:6]).reshape(-1, 1),
-            "acceleration": torch.linalg.norm(features["status_feature"][6:8]).reshape(-1, 1),
+            "speed": torch.linalg.norm(features["status_feature"][4:6]).reshape(-1),
+            "acceleration": torch.linalg.norm(features["status_feature"][6:8]).reshape(-1),
         })
         
         return {
