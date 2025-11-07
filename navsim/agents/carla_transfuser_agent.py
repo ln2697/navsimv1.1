@@ -1,6 +1,6 @@
 import json
 import os
-from typing import Any, List, Dict, Optional, Union
+from typing import Any, List, Dict, Union
 
 from beartype import beartype
 import torch
@@ -11,9 +11,6 @@ import pytorch_lightning as pl
 
 from navsim.agents.abstract_agent import AbstractAgent
 from navsim.agents.transfuser.transfuser_config import TransfuserConfig
-from navsim.agents.transfuser.transfuser_model import TransfuserModel
-from navsim.agents.transfuser.transfuser_callback import TransfuserCallback
-from navsim.agents.transfuser.transfuser_loss import transfuser_loss
 from navsim.agents.transfuser.transfuser_features import TransfuserFeatureBuilder, TransfuserTargetBuilder
 from navsim.common.dataclasses import SensorConfig
 from navsim.planning.training.abstract_feature_target_builder import AbstractFeatureBuilder, AbstractTargetBuilder
