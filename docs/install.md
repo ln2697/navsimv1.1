@@ -64,7 +64,7 @@ export OPENSCENE_DATA_ROOT="$HOME/navsim_workspace/dataset"
 Finally, install navsim.
 To this end, create a new environment and install the required dependencies:
 ```
-conda env create --name navsim -f environment.yml
-conda activate navsim
+conda env create --name navsimv1.1 -f environment.yml
+conda activate navsimv1.1
 pip install -e .
 ```

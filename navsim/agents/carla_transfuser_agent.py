@@ -6,7 +6,7 @@ from beartype import beartype
 import torch
 from torch.optim import Optimizer
 from torch.optim.lr_scheduler import LRScheduler
-from config_open_loop import OpenLoopConfig
+from config_open_loop import OpenLoopConfig as CarlaOpenLoopConfig
 from config_training import TrainingConfig as CarlaTrainingConfig
 import pytorch_lightning as pl
 
@@ -16,8 +16,8 @@ from navsim.agents.transfuser.transfuser_features import TransfuserFeatureBuilde
 from navsim.common.dataclasses import SensorConfig
 from navsim.planning.training.abstract_feature_target_builder import AbstractFeatureBuilder, AbstractTargetBuilder
 
-from model.model import Model as CarlaModel
-from open_loop_inference import OpenLoopInference
+from open_loop_inference import OpenLoopInference as CarlaOpenLoopInference
+
 class CarlaTransfuserAgent(AbstractAgent):
     """Agent interface for TransFuser baseline."""
     @beartype
@@ -40,10 +40,10 @@ class CarlaTransfuserAgent(AbstractAgent):
         with open(os.path.join(self._checkpoint_path, "config.json"), "r", encoding="utf-8") as f:
             json_config = json.load(f)
         self._carla_model_config = CarlaTrainingConfig(json_config)
-        self._config_open_loop = OpenLoopConfig()
-        self._open_loop_inference = OpenLoopInference(
+        self._carla_config_open_loop = CarlaOpenLoopConfig()
+        self._carla_open_loop_inference = CarlaOpenLoopInference(
             config_training=self._carla_model_config,
-            config_open_loop=self._config_open_loop,
+            config_open_loop=self._carla_config_open_loop,
             model_path=self._checkpoint_path,
             device=torch.device("cuda" if torch.cuda.is_available() else "cpu"),
             prefix="model"
