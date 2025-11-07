@@ -77,7 +77,9 @@ class CarlaTransfuserAgent(AbstractAgent):
     def forward(self, features: Dict[str, torch.Tensor]) -> Dict[str, torch.Tensor]:
         """Inherited, see superclass."""
         
-        rgb = cv2.imdecode(np.frombuffer(features["camera_feature"], np.uint8), cv2.IMREAD_COLOR)
+        rgb : torch.Tensor = features["camera_feature"]
+        rgb = rgb.numpy()
+        rgb = cv2.imdecode(np.frombuffer(rgb, np.uint8), cv2.IMREAD_COLOR)
         rgb = np.transpose(rgb, (2, 0, 1))  # HWC to CHW
         rgb = torch.tensor(rgb).unsqueeze(0).float()  # CHW to NCHW
         output: CarlaOpenLoopPrediction = self._carla_open_loop_inference({
