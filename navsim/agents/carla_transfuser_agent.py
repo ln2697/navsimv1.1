@@ -1,6 +1,7 @@
 import json
 import logging
 import os
+import random
 from tabnanny import check
 from typing import List, Dict, Union
 
@@ -49,11 +50,19 @@ class CarlaTransfuserAgent(AbstractAgent):
             json_config = json.load(f)
         self._carla_model_config = CarlaTrainingConfig(json_config)
         self._carla_config_open_loop = CarlaOpenLoopConfig()
+        gpu_count = torch.cuda.device_count()
+        if gpu_count > 1:
+            idx = random.randint(0, gpu_count - 1)
+            device = torch.device(f"cuda:{idx}")
+        elif gpu_count == 1:
+            device = torch.device("cuda:0")
+        else:
+            device = torch.device("cpu")
         self._carla_open_loop_inference = CarlaOpenLoopInference(
             config_training=self._carla_model_config,
             config_open_loop=self._carla_config_open_loop,
             model_path=self._checkpoint_path,
-            device=torch.device("cuda" if torch.cuda.is_available() else "cpu"),
+            device=device,
             prefix=model_filename
         )
 
