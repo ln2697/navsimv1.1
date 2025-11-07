@@ -71,7 +71,7 @@ class TransfuserFeatureBuilder(AbstractFeatureBuilder):
         # Compression with JPEG quality 30
         encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 30]
         _, compressed_image = cv2.imencode('.jpg', resized_image, encode_param)
-        return compressed_image
+        return torch.from_numpy(compressed_image)
 
     def _get_lidar_feature(self, agent_input: AgentInput) -> torch.Tensor:
         """
