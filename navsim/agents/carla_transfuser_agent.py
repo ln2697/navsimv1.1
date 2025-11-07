@@ -80,7 +80,6 @@ class CarlaTransfuserAgent(AbstractAgent):
         rgb = cv2.imdecode(np.frombuffer(features["camera_feature"], np.uint8), cv2.IMREAD_COLOR)
         rgb = np.transpose(rgb, (2, 0, 1))  # HWC to CHW
         rgb = torch.tensor(rgb).unsqueeze(0).float()  # CHW to NCHW
-        print(rgb.shape, features["status_feature"].shape)
         output: CarlaOpenLoopPrediction = self._carla_open_loop_inference({
             "rgb": rgb,
             "command": features["status_feature"][:4].reshape(-1, 4),
