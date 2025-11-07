@@ -1,5 +1,6 @@
 import json
 import os
+from tabnanny import check
 from typing import List, Dict, Union
 
 import torch
@@ -17,14 +18,14 @@ from navsim.planning.training.abstract_feature_target_builder import AbstractFea
 
 from open_loop_inference import OpenLoopInference as CarlaOpenLoopInference
 from constants import SourceDataset as CarlaSourceDataset
+import numpy as np
 
 class CarlaTransfuserAgent(AbstractAgent):
     """Agent interface for TransFuser baseline."""
     def __init__(
         self,
         config: TransfuserConfig,
-        checkpoint_path: str,
-        epoch_number: int
+        checkpoint_path: str
     ):
         """
         Initializes TransFuser agent.
@@ -35,7 +36,9 @@ class CarlaTransfuserAgent(AbstractAgent):
 
         self._config = config
 
-        self._checkpoint_path = checkpoint_path
+        self._checkpoint_path = checkpoint_path.rsplit("/", 1)[0]
+        model_filename = checkpoint_path.rsplit("/", 1)[1]
+        print(self._checkpoint_path, model_filename)
         
         with open(os.path.join(self._checkpoint_path, "config.json"), "r", encoding="utf-8") as f:
             json_config = json.load(f)
@@ -46,7 +49,7 @@ class CarlaTransfuserAgent(AbstractAgent):
             config_open_loop=self._carla_config_open_loop,
             model_path=self._checkpoint_path,
             device=torch.device("cuda" if torch.cuda.is_available() else "cpu"),
-            prefix=f"model_{epoch_number:04d}"
+            prefix=model_filename
         )
 
     def name(self) -> str:
@@ -72,12 +75,14 @@ class CarlaTransfuserAgent(AbstractAgent):
     def forward(self, features: Dict[str, torch.Tensor]) -> Dict[str, torch.Tensor]:
         """Inherited, see superclass."""
         
+        print(features["rgb"].shape)
+        print(features["status_feature"].shape)
+        
         return self._carla_open_loop_inference({
             "rgb": features["rgb"],
-            "source_dataset": CarlaSourceDataset.NAVSIM,
             "command": features["status_feature"][:4],
-            "speed": torch.norm(features["status_feature"][4:6]),
-            "acceleration": torch.norm(features["status_feature"][6:8]),
+            "speed": torch.linalg.norm(features["status_feature"][4:6]).reshape(-1, 1),
+            "acceleration": torch.linalg.norm(features["status_feature"][6:8]).reshape(-1, 1),
         })
 
     def compute_loss(
