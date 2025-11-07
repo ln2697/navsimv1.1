@@ -86,7 +86,6 @@ class CarlaTransfuserAgent(AbstractAgent):
         rgb = np.transpose(rgb, (2, 0, 1))  # HWC to CHW
         rgb = torch.tensor(rgb).unsqueeze(0).float()  # CHW to NCHW
         
-        logger.info(f"RGB shape: {rgb.shape}. Features shape: {features['status_feature'].shape}")
         output: CarlaOpenLoopPrediction = self._carla_open_loop_inference.forward({
             "rgb": rgb,
             "command": features["status_feature"][:, :4].reshape(-1, 4),
