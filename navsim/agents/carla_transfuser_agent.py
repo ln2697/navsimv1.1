@@ -17,6 +17,7 @@ from navsim.common.dataclasses import SensorConfig
 from navsim.planning.training.abstract_feature_target_builder import AbstractFeatureBuilder, AbstractTargetBuilder
 
 from open_loop_inference import OpenLoopInference as CarlaOpenLoopInference
+from open_loop_inference import OpenLoopPrediction as CarlaOpenLoopPrediction
 from constants import SourceDataset as CarlaSourceDataset
 import numpy as np
 
@@ -78,12 +79,16 @@ class CarlaTransfuserAgent(AbstractAgent):
         print(features["rgb"].shape)
         print(features["status_feature"].shape)
         
-        return self._carla_open_loop_inference({
+        output: CarlaOpenLoopPrediction = self._carla_open_loop_inference({
             "rgb": features["rgb"],
             "command": features["status_feature"][:4],
             "speed": torch.linalg.norm(features["status_feature"][4:6]).reshape(-1, 1),
             "acceleration": torch.linalg.norm(features["status_feature"][6:8]).reshape(-1, 1),
         })
+        
+        return {
+            "trajectory": torch.concatenate([output.pred_future_waypoints, output.pred_future_headings.unsqueeze(-1)], dim=-1)
+        }
 
     def compute_loss(
         self,
