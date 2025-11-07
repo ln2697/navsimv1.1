@@ -6,6 +6,7 @@ from beartype import beartype
 import torch
 from torch.optim import Optimizer
 from torch.optim.lr_scheduler import LRScheduler
+from config_open_loop import OpenLoopConfig
 from config_training import TrainingConfig as CarlaTrainingConfig
 import pytorch_lightning as pl
 
@@ -16,7 +17,7 @@ from navsim.common.dataclasses import SensorConfig
 from navsim.planning.training.abstract_feature_target_builder import AbstractFeatureBuilder, AbstractTargetBuilder
 
 from model.model import Model as CarlaModel
-
+from open_loop_inference import OpenLoopInference
 class CarlaTransfuserAgent(AbstractAgent):
     """Agent interface for TransFuser baseline."""
     @beartype
@@ -39,7 +40,14 @@ class CarlaTransfuserAgent(AbstractAgent):
         with open(os.path.join(self._checkpoint_path, "config.json"), "r", encoding="utf-8") as f:
             json_config = json.load(f)
         self._carla_model_config = CarlaTrainingConfig(json_config)
-        self._carla_model = CarlaModel()
+        self._config_open_loop = OpenLoopConfig()
+        self._open_loop_inference = OpenLoopInference(
+            config_training=self._carla_model_config,
+            config_open_loop=self._config_open_loop,
+            model_path=self._checkpoint_path,
+            device=torch.device("cuda" if torch.cuda.is_available() else "cpu"),
+            prefix="model"
+        )
 
     def name(self) -> str:
         """Inherited, see superclass."""
@@ -47,12 +55,7 @@ class CarlaTransfuserAgent(AbstractAgent):
 
     def initialize(self) -> None:
         """Inherited, see superclass."""
-        model_path = os.path.join(self._checkpoint_path, "model.pth")
-        if torch.cuda.is_available():
-            state_dict: Dict[str, Any] = torch.load(model_path, map_location=torch.device("cuda"))
-        else:
-            state_dict: Dict[str, Any] = torch.load(model_path, map_location=torch.device("cpu"))
-        self.load_state_dict(state_dict, strict=True)
+        pass
 
     def get_sensor_config(self) -> SensorConfig:
         """Inherited, see superclass."""
