@@ -1,8 +1,7 @@
 import json
 import os
-from typing import Any, List, Dict, Union
+from typing import List, Dict, Union
 
-from beartype import beartype
 import torch
 from torch.optim import Optimizer
 from torch.optim.lr_scheduler import LRScheduler
@@ -20,7 +19,6 @@ from open_loop_inference import OpenLoopInference as CarlaOpenLoopInference
 
 class CarlaTransfuserAgent(AbstractAgent):
     """Agent interface for TransFuser baseline."""
-    @beartype
     def __init__(
         self,
         config: TransfuserConfig,
