@@ -23,6 +23,7 @@ class CarlaTransfuserAgent(AbstractAgent):
         self,
         config: TransfuserConfig,
         checkpoint_path: str,
+        epoch_number: int
     ):
         """
         Initializes TransFuser agent.
@@ -44,7 +45,7 @@ class CarlaTransfuserAgent(AbstractAgent):
             config_open_loop=self._carla_config_open_loop,
             model_path=self._checkpoint_path,
             device=torch.device("cuda" if torch.cuda.is_available() else "cpu"),
-            prefix="model"
+            prefix=f"model_{epoch_number:04d}"
         )
 
     def name(self) -> str:
@@ -69,7 +70,7 @@ class CarlaTransfuserAgent(AbstractAgent):
 
     def forward(self, features: Dict[str, torch.Tensor]) -> Dict[str, torch.Tensor]:
         """Inherited, see superclass."""
-        return self._transfuser_model(features)
+        return self._carla_open_loop_inference(features)
 
     def compute_loss(
         self,

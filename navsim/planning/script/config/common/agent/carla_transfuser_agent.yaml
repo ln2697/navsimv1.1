@@ -14,3 +14,4 @@ config:
   latent: False
 
 checkpoint_path: null
+epoch_number: null
