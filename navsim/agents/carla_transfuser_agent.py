@@ -101,14 +101,8 @@ class CarlaTransfuserAgent(AbstractAgent):
             "acceleration": torch.linalg.norm(features["status_feature"][:, 6:8]).reshape(-1, 1),
         })
         
-        future_waypoints = output.pred_future_waypoints.clone()
-        
-        # Model trained in mixed dataset, need to flip y axis
-        future_waypoints[:, :, 1] = -future_waypoints[:, :, 1]
-        future_headings = -output.pred_future_headings.clone()
-        
         return {
-            "trajectory": torch.concatenate([future_waypoints, future_headings.unsqueeze(-1)], dim=-1).cpu()
+            "trajectory": torch.concatenate([output.pred_future_waypoints, -output.pred_future_headings.unsqueeze(-1)], dim=-1).cpu()
         }
 
     def compute_loss(
