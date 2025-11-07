@@ -3,6 +3,7 @@ import os
 from tabnanny import check
 from typing import List, Dict, Union
 
+import cv2
 import torch
 from torch.optim import Optimizer
 from torch.optim.lr_scheduler import LRScheduler
@@ -76,12 +77,13 @@ class CarlaTransfuserAgent(AbstractAgent):
     def forward(self, features: Dict[str, torch.Tensor]) -> Dict[str, torch.Tensor]:
         """Inherited, see superclass."""
         
-        print(features["rgb"].shape)
-        print(features["status_feature"].shape)
-        
+        rgb = cv2.imdecode(np.frombuffer(features["camera_feature"], np.uint8), cv2.IMREAD_COLOR)
+        rgb = np.transpose(rgb, (2, 0, 1))  # HWC to CHW
+        rgb = torch.tensor(rgb).unsqueeze(0).float()  # CHW to NCHW
+        print(rgb.shape, features["status_feature"].shape)
         output: CarlaOpenLoopPrediction = self._carla_open_loop_inference({
-            "rgb": features["rgb"],
-            "command": features["status_feature"][:4],
+            "rgb": rgb,
+            "command": features["status_feature"][:4].reshape(-1, 4),
             "speed": torch.linalg.norm(features["status_feature"][4:6]).reshape(-1, 1),
             "acceleration": torch.linalg.norm(features["status_feature"][6:8]).reshape(-1, 1),
         })
