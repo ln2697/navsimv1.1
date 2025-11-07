@@ -95,7 +95,7 @@ class CarlaTransfuserAgent(AbstractAgent):
         })
         
         return {
-            "trajectory": torch.concatenate([output.pred_future_waypoints, output.pred_future_headings.unsqueeze(-1)], dim=-1)
+            "trajectory": torch.concatenate([output.pred_future_waypoints, output.pred_future_headings.unsqueeze(-1)], dim=-1).cpu()
         }
 
     def compute_loss(
