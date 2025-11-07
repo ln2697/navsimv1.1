@@ -20,4 +20,5 @@ train_test_split=$TRAIN_TEST_SPLIT \
 agent=carla_transfuser_agent \
 worker=single_machine_thread_pool \
 agent.checkpoint_path=$CHECKPOINT \
-experiment_name=carla_transfuser_agent_eval
+experiment_name=carla_transfuser_agent_eval \
+epoch_number=24
