@@ -21,7 +21,6 @@ from navsim.planning.training.abstract_feature_target_builder import AbstractFea
 
 from open_loop_inference import OpenLoopInference as CarlaOpenLoopInference
 from open_loop_inference import OpenLoopPrediction as CarlaOpenLoopPrediction
-from constants import SourceDataset as CarlaSourceDataset
 import numpy as np
 
 logger =logging.getLogger(__name__)
