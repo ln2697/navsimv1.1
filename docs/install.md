@@ -27,7 +27,7 @@ Please refer to [splits](splits.md) for an overview on the standardized training
 You can download the mini, trainval, test and private_test_e2e dataset split with the following scripts
 ```
 bash $PROJECT_DIR/3rd_party/navsim_workspace/navsimv1.1/download/download_navtrain_parallel.sh
-bash $PROJECT_DIR/3rd_party/navsim_workspace/navsimv1.1/download/downlaod_test_parallel.sh
+bash $PROJECT_DIR/3rd_party/navsim_workspace/navsimv1.1/download/download_test_parallel.sh
 ```
 Also, the script `./download_navtrain` can be used to download a small portion of the  `trainval` dataset split which is needed for the `navtrain` training split. 
 
