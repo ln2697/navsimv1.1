@@ -32,10 +32,10 @@ This will download the splits into the download directory. From there, move it t
     ├── maps
     ├── navsim_logs
     |    ├── test
-    |    ├── navtrain
+    |    ├── trainval
     └── sensor_blobs
          ├── test
-         ├── navtrain
+         ├── trainval
 ```
 Set the required environment variables, by adding the following to your `~/.bashrc` file
 Based on the structure above, the environment variables need to be defined as:
