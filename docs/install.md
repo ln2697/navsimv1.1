@@ -69,7 +69,7 @@ TODO
 ### 6. Build test `metric_cache`
 If you are on TCML, run
 ```bash
-bash $NAVSIM_DEVKIT_ROOT/scripts/run_metric_caching_tcml.sh
+bash $NAVSIM_DEVKIT_ROOT/scripts/evaluation/run_metric_caching_tcml.sh
 ```
 Otherwise, go to the directory and adapt the script.
 
