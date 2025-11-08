@@ -74,3 +74,7 @@ bash $NAVSIM_DEVKIT_ROOT/scripts/evaluation/run_metric_caching_tcml.sh
 Otherwise, go to the directory and adapt the script.
 
 This will create the metric cache under `$NAVSIM_EXP_ROOT/metric_cache`, where `$NAVSIM_EXP_ROOT` is defined by the environment variable set during installation.
+
+### 7. Notes for future
+- In case of weird errors, most likely redownloading data would be helpful.
+- Remove the `rm` in download scripts to inspect the downloaded files.
