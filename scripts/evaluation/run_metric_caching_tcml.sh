@@ -3,7 +3,7 @@
 #SBATCH --nodes=1
 #SBATCH --time=1-00:00:00
 #SBATCH --gres=gpu:0
-#SBATCH --cpus-per-task=16
+#SBATCH --cpus-per-task=8
 #SBATCH --partition=L40Sday
 #SBATCH --mail-type=FAIL,END
 #SBATCH --mail-user=long.nguyen@student.uni-tuebingen.de
@@ -11,7 +11,6 @@
 
 TRAIN_TEST_SPLIT=navtest
 CACHE_PATH=3rd_party/navsim_workspace/exp/metric_cache
-
 export NAVSIM_DEVKIT_ROOT="${PROJECT_DIR}/3rd_party/navsim_workspace/navsimv1.1"
 
 python $NAVSIM_DEVKIT_ROOT/navsim/planning/script/run_metric_caching.py \
