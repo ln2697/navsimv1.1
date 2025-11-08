@@ -16,7 +16,7 @@ Navigate to the download directory and download the maps
 **NOTE: Please check the [LICENSE file](https://motional-nuplan.s3-ap-northeast-1.amazonaws.com/LICENSE) before downloading the data.**
 
 ```
-cd download && ./download_maps
+cd $PROJECT_DIR/3rd_party/navsim_workspace/dataset && bash $PROJECT_DIR/3rd_party/navsim_workspace/navsimv1.1/download/download_maps.sh
 ```
 
 Next download the data splits you want to use.
@@ -25,10 +25,8 @@ Please refer to [splits](splits.md) for an overview on the standardized training
 
 You can download the mini, trainval, test and private_test_e2e dataset split with the following scripts
 ```
-./download_mini
-./download_trainval
-./download_test
-./download_private_test_e2e
+bash $PROJECT_DIR/3rd_party/navsim_workspace/navsimv1.1/download/download_navtrain_parallel.sh
+bash $PROJECT_DIR/3rd_party/navsim_workspace/navsimv1.1/download/downlaod_test.sh
 ```
 Also, the script `./download_navtrain` can be used to download a small portion of the  `trainval` dataset split which is needed for the `navtrain` training split. 
 
