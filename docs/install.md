@@ -16,7 +16,8 @@ Navigate to the download directory and download the maps
 **NOTE: Please check the [LICENSE file](https://motional-nuplan.s3-ap-northeast-1.amazonaws.com/LICENSE) before downloading the data.**
 
 ```
-cd $PROJECT_DIR/3rd_party/navsim_workspace/dataset && bash $PROJECT_DIR/3rd_party/navsim_workspace/navsimv1.1/download/download_maps.sh
+cd $PROJECT_DIR/3rd_party/navsim_workspace/dataset
+bash $PROJECT_DIR/3rd_party/navsim_workspace/navsimv1.1/download/download_maps.sh
 ```
 
 Next download the data splits you want to use.
