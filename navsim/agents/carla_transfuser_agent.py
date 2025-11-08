@@ -42,9 +42,14 @@ class CarlaTransfuserAgent(AbstractAgent):
         self._config = config
 
         self._checkpoint_path = checkpoint_path.rsplit("/", 1)[0]
-        model_filename = checkpoint_path.rsplit("/", 1)[1]
-        print(self._checkpoint_path, model_filename)
-        
+        self._model_filename = checkpoint_path.rsplit("/", 1)[1]
+
+    def name(self) -> str:
+        """Inherited, see superclass."""
+        return self.__class__.__name__
+
+    def initialize(self) -> None:
+        """Inherited, see superclass."""
         with open(os.path.join(self._checkpoint_path, "config.json"), "r", encoding="utf-8") as f:
             json_config = json.load(f)
         self._carla_model_config = CarlaTrainingConfig(json_config)
@@ -62,16 +67,8 @@ class CarlaTransfuserAgent(AbstractAgent):
             config_open_loop=self._carla_config_open_loop,
             model_path=self._checkpoint_path,
             device=device,
-            prefix=model_filename
+            prefix=self._model_filename
         )
-
-    def name(self) -> str:
-        """Inherited, see superclass."""
-        return self.__class__.__name__
-
-    def initialize(self) -> None:
-        """Inherited, see superclass."""
-        pass
 
     def get_sensor_config(self) -> SensorConfig:
         """Inherited, see superclass."""
