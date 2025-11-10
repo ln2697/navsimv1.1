@@ -60,18 +60,18 @@ class TransfuserFeatureBuilder(AbstractFeatureBuilder):
         """
 
         cameras = agent_input.cameras[-1]
-
-        # Crop to ensure 4:1 aspect ratio
-        l0 = cameras.cam_l0.image[28:-28, 416:-416]
-        f0 = cameras.cam_f0.image[28:-28]
-        r0 = cameras.cam_r0.image[28:-28, 416:-416]
-
-        # stitch l0, f0, r0 images
-        stitched_image = np.concatenate([l0, f0, r0], axis=1)
-        resized_image = cv2.resize(stitched_image, (1024, 256))
-        tensor_image = transforms.ToTensor()(resized_image)
-
-        return tensor_image
+        
+        l0 = cameras.cam_l0.image
+        f0 = cameras.cam_f0.image
+        r0 = cameras.cam_r0.image
+        b0 = cameras.cam_b0.image
+        
+        stitched_image = np.concatenate([l0, f0, r0, b0], axis=1)
+        resized_image = cv2.resize(stitched_image, (stitched_image.shape[1] // 4, stitched_image.shape[0] // 4))
+        # Compression with JPEG quality 30
+        encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 30]
+        _, compressed_image = cv2.imencode('.jpg', resized_image, encode_param)
+        return torch.from_numpy(compressed_image)
 
     def _get_lidar_feature(self, agent_input: AgentInput) -> torch.Tensor:
         """
@@ -335,7 +335,7 @@ class TransfuserTargetBuilder(AbstractTargetBuilder):
         """
 
         # NOTE: remove half in backward direction
-        pixel_center = np.array([[0, self._config.bev_pixel_width / 2.0]])
+        pixel_center = np.array([[self._config.bev_pixel_height / 2.0, self._config.bev_pixel_width / 2.0]])
         coords_idcs = (coords / self._config.bev_pixel_size) + pixel_center
 
         return coords_idcs.astype(np.int32)

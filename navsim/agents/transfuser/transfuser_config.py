@@ -40,7 +40,7 @@ class TransfuserConfig:
     lidar_resolution_height = 256
 
     img_vert_anchors: int = 256 // 32
-    img_horz_anchors: int = 1024 // 32
+    img_horz_anchors: int = 1920 // 32
     lidar_vert_anchors: int = 256 // 32
     lidar_horz_anchors: int = 256 // 32
 
@@ -101,7 +101,7 @@ class TransfuserConfig:
     }
 
     bev_pixel_width: int = lidar_resolution_width
-    bev_pixel_height: int = lidar_resolution_height // 2
+    bev_pixel_height: int = lidar_resolution_height
     bev_pixel_size: float = 0.25
 
     num_bev_classes = 7
