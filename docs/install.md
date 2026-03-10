@@ -24,6 +24,7 @@ bash $LEAD_PROJECT_ROOT/3rd_party/navsim_workspace/navsimv1.1/download/download_
 
 Next download the data splits you want to use.
 ```bash
+cd $LEAD_PROJECT_ROOT/3rd_party/navsim_workspace/dataset
 bash $LEAD_PROJECT_ROOT/3rd_party/navsim_workspace/navsimv1.1/download/download_navtrain_parallel.sh
 bash $LEAD_PROJECT_ROOT/3rd_party/navsim_workspace/navsimv1.1/download/download_test_parallel.sh
 ```
@@ -48,7 +49,7 @@ Based on the structure above, the environment variables need to be defined as:
 export NUPLAN_MAP_VERSION="nuplan-maps-v1.0"
 export NUPLAN_MAPS_ROOT="${LEAD_PROJECT_ROOT}/3rd_party/navsim_workspace/dataset/maps"
 export NAVSIM_EXP_ROOT="${LEAD_PROJECT_ROOT}/3rd_party/navsim_workspace/exp"
-#export NAVSIM_DEVKIT_ROOT="${LEAD_PROJECT_ROOT}/3rd_party/navsim_workspace/navsimv1.1"
+export NAVSIM_DEVKIT_ROOT="${LEAD_PROJECT_ROOT}/3rd_party/navsim_workspace/navsimv1.1"
 export OPENSCENE_DATA_ROOT="${LEAD_PROJECT_ROOT}/3rd_party/navsim_workspace/dataset"
 ```
 
