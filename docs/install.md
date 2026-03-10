@@ -17,6 +17,7 @@ git switch main # or other branch
 ### 2. Download the demo data
 You need to download the OpenScene logs and sensor blobs, as well as the nuPlan maps.
 ```bash
+mkdir -p $LEAD_PROJECT_ROOT/3rd_party/navsim_workspace/dataset
 cd $LEAD_PROJECT_ROOT/3rd_party/navsim_workspace/dataset
 bash $LEAD_PROJECT_ROOT/3rd_party/navsim_workspace/navsimv1.1/download/download_maps.sh
 ```
