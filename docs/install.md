@@ -2,7 +2,7 @@
 
 To get started with NAVSIM: 
 
-### 1. Clone the navsim-devkit
+### 1. [Only relevant for maintainers] Clone the directory
 This repo serves as a submodule, if the main repo was not cloned recursively, execute
 ```bash
 git submodule update --init --recursive
@@ -27,6 +27,15 @@ Next download the data splits you want to use.
 cd $LEAD_PROJECT_ROOT/3rd_party/navsim_workspace/dataset
 bash $LEAD_PROJECT_ROOT/3rd_party/navsim_workspace/navsimv1.1/download/download_navtrain_parallel.sh
 bash $LEAD_PROJECT_ROOT/3rd_party/navsim_workspace/navsimv1.1/download/download_test_parallel.sh
+```
+
+Restructure after download
+```bash
+mv $LEAD_PROJECT_ROOT/3rd_party/navsim_workspace/dataset/test_navsim_logs/test \
+   $LEAD_PROJECT_ROOT/3rd_party/navsim_workspace/dataset/navsim_logs/test
+
+mv $LEAD_PROJECT_ROOT/3rd_party/navsim_workspace/dataset/test_sensor_blobs/test \
+   $LEAD_PROJECT_ROOT/3rd_party/navsim_workspace/dataset/sensor_blobs/test
 ```
 
 This will download the splits into the download directory. From there, move it to create the following structure.
@@ -70,17 +79,16 @@ pip install beartype jaxtyping carla numba
 
 ### 5. Build `navtrain` cache
 
-TODO
-
-### 6. Build test `metric_cache`
-If you are on TCML, run
 ```bash
-bash $NAVSIM_DEVKIT_ROOT/scripts/evaluation/run_metric_caching_tcml.sh
+bash $LEAD_PROJECT_ROOT/3rd_party/navsim_workspace/navsimv1.1/scripts/evaluation/run_navtrain_caching.sh
 ```
-Otherwise, go to the directory and adapt the script.
 
-This will create the metric cache under `$NAVSIM_EXP_ROOT/metric_cache`, where `$NAVSIM_EXP_ROOT` is defined by the environment variable set during installation.
+### 6. Build `navtest` cache
 
-### 7. Notes for future
+```bash
+bash $LEAD_PROJECT_ROOT/3rd_party/navsim_workspace/navsimv1.1/scripts/evaluation/run_navtest_caching.sh
+```
+
+### 7. Common issues
 - In case of weird errors, most likely redownloading data would be helpful.
 - Remove the `rm` in download scripts to inspect the downloaded files.
