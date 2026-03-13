@@ -77,13 +77,13 @@ pip install -e .
 pip install beartype jaxtyping carla numba
 ```
 
-### 5. Build `navtrain` cache
+### 5. Build `navtrain` training cache
 
 ```bash
-bash $LEAD_PROJECT_ROOT/3rd_party/navsim_workspace/navsimv1.1/scripts/evaluation/run_navtrain_caching.sh
+bash $LEAD_PROJECT_ROOT/3rd_party/navsim_workspace/navsimv1.1/scripts/training/run_navtrain_caching.sh
 ```
 
-### 6. Build `navtest` cache
+### 6. Build `navtest` metrics cache
 
 ```bash
 bash $LEAD_PROJECT_ROOT/3rd_party/navsim_workspace/navsimv1.1/scripts/evaluation/run_navtest_caching.sh
