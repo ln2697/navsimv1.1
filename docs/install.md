@@ -80,6 +80,8 @@ pip install -e .
 
 ### 4. Install needed dependencies to integrate CARLA Model
 
+Install those dependencies in `navsimv1.1` environment.
+
 ```bash
 pip install beartype jaxtyping carla numba
 ```
