@@ -10,7 +10,7 @@
 #SBATCH --mem=200gb
 
 TRAIN_TEST_SPLIT=navtrain
-CACHE_PATH=$LEAD_PROJECT_ROOT/data/navsim_training_cache/trainval
+CACHE_PATH=${LEAD_PROJECT_ROOT}/data/navsim_training_cache/trainval
 export NAVSIM_DEVKIT_ROOT="${LEAD_PROJECT_ROOT}/3rd_party/navsim_workspace/navsimv1.1"
 
-python $NAVSIM_DEVKIT_ROOT/navsim/planning/script/run_dataset_caching.py train_test_split=trainval
+python $NAVSIM_DEVKIT_ROOT/navsim/planning/script/run_dataset_caching.py train_test_split=trainval experiment_name=navtrain_cache cache_path=$CACHE_PATH
