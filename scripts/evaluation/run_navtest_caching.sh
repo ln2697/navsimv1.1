@@ -10,7 +10,7 @@
 #SBATCH --mem=200gb
 
 TRAIN_TEST_SPLIT=navtest
-CACHE_PATH=${LEAD_PROJECT_ROOT}/3rd_party/navsim_workspace/exp/metric_cache_v1.1
+CACHE_PATH=${LEAD_PROJECT_ROOT}/3rd_party/navsim_workspace/exp/metric_cache_navtest
 export NAVSIM_DEVKIT_ROOT="${LEAD_PROJECT_ROOT}/3rd_party/navsim_workspace/navsimv1.1"
 
 python $NAVSIM_DEVKIT_ROOT/navsim/planning/script/run_metric_caching.py \
