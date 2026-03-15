@@ -9,8 +9,14 @@
 #SBATCH --mail-user=long.nguyen@student.uni-tuebingen.de
 #SBATCH --mem=200gb
 
-TRAIN_TEST_SPLIT=navtrain
-CACHE_PATH=${LEAD_PROJECT_ROOT}/data/navsim_training_cache/trainval
-export NAVSIM_DEVKIT_ROOT="${LEAD_PROJECT_ROOT}/3rd_party/navsim_workspace/navsimv1.1"
+eval "$(conda shell.bash hook)"
+if [ -z "$CONDA_INTERPRETER" ]; then
+    export CONDA_INTERPRETER="navsimv1.1" # Check if CONDA_INTERPRETER is not set, then set it to navsimv1.1
+fi
+source activate "$CONDA_INTERPRETER"
 
-python $NAVSIM_DEVKIT_ROOT/navsim/planning/script/run_dataset_caching.py train_test_split=trainval experiment_name=navtrain_cache cache_path=$CACHE_PATH
+python "${LEAD_PROJECT_ROOT}/3rd_party/navsim_workspace/navsimv1.1/navsim/planning/script/run_dataset_caching.py" \
+    agent=carla_transfuser_agent \
+    train_test_split=navtrain \
+    experiment_name=navtrain_cache_transfuser \
+    cache_path="${LEAD_PROJECT_ROOT}/data/navsim_training_cache/navtrain"
