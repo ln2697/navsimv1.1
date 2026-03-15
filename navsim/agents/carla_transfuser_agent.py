@@ -10,7 +10,7 @@ import torch
 from torch.optim import Optimizer
 from torch.optim.lr_scheduler import LRScheduler
 from lead.inference.config_open_loop import OpenLoopConfig as CarlaOpenLoopConfig
-from lead.inference.config_training import TrainingConfig as CarlaTrainingConfig
+from lead.training.config_training import TrainingConfig as CarlaTrainingConfig
 import pytorch_lightning as pl
 
 from navsim.agents.abstract_agent import AbstractAgent
