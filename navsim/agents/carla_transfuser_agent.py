@@ -41,8 +41,9 @@ class CarlaTransfuserAgent(AbstractAgent):
 
         self._config = config
 
-        self._checkpoint_path = checkpoint_path.rsplit("/", 1)[0]
-        self._model_filename = checkpoint_path.rsplit("/", 1)[1]
+        if checkpoint_path is not None:
+            self._checkpoint_path = checkpoint_path.rsplit("/", 1)[0]
+            self._model_filename = checkpoint_path.rsplit("/", 1)[1]
 
     def name(self) -> str:
         """Inherited, see superclass."""
