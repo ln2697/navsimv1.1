@@ -10,10 +10,7 @@
 #SBATCH --mem=200gb
 
 eval "$(conda shell.bash hook)"
-if [ -z "$CONDA_INTERPRETER" ]; then
-    export CONDA_INTERPRETER="navsimv1.1" # Check if CONDA_INTERPRETER is not set, then set it to navsimv1.1
-fi
-source activate "$CONDA_INTERPRETER"
+source activate navsimv1.1
 
 python "${LEAD_PROJECT_ROOT}/3rd_party/navsim_workspace/navsimv1.1/navsim/planning/script/run_dataset_caching.py" \
     agent=carla_transfuser_agent \
