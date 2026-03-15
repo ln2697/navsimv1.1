@@ -9,9 +9,6 @@
 #SBATCH --mail-user=long.nguyen@student.uni-tuebingen.de
 #SBATCH --mem=200gb
 
-eval "$(conda shell.bash hook)"
-source activate navsimv1.1
-
 python "${LEAD_PROJECT_ROOT}/3rd_party/navsim_workspace/navsimv1.1/navsim/planning/script/run_dataset_caching.py" \
     agent=carla_transfuser_agent \
     train_test_split=navtrain \

@@ -65,9 +65,16 @@ export OPENSCENE_DATA_ROOT="${LEAD_PROJECT_ROOT}/3rd_party/navsim_workspace/data
 ### 3. Install the navsim-devkit
 Finally, install navsim.
 To this end, create a new environment and install the required dependencies:
+
 ```
+# Install navsimv1.1
+cd ${LEAD_PROJECT_ROOT}/3rd_party/navsim_workspace/navsimv1.1
 conda env create --name navsimv1.1 -f environment.yml
 conda activate navsimv1.1
+pip install -e . 
+
+# Install lead in navsimv1.1 conda environment
+cd $LEAD_PROJECT_ROOT
 pip install -e .
 ```
 
